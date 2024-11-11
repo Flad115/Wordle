@@ -35,6 +35,12 @@
   background-color: white;
 }
 
+.beginText {
+  margin: 1em auto 4px;
+  text-align: center;
+  font-size: 2vw;
+}
+
 .popup {
   display: flex;
   position: absolute;
