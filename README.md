@@ -4,7 +4,7 @@
 
 ## This learning project is a recreation of the game wordle developed Josh Wardle.
 
-You have 6 guesses to figure out a random 5 letter word (ENGLISH ONLY). Input answers by typing and submit a guess by pressing enter (WILL NOT WORK ON MOBILE). There is no case sensitiity
+You have 6 guesses to figure out a random 5 letter word (ENGLISH ONLY). Input answers by typing and submit a guess by pressing enter (WILL NOT WORK ON MOBILE). There is no case sensitivity
 
 > The letterboxes will become colored when a guess is submitted:
 
@@ -24,8 +24,6 @@ It uses two separate APIs, one to GET the word answers and the other to POST the
 
 - https://words.dev-apis.com/word-of-the-day
 - https://words.dev-apis.com/validate-word
-
-#### Notes
 
 The API that is POSTed to and the method/body needed. A header is not included because for this API it's not necessary.
 
@@ -50,11 +48,13 @@ validate(letters, makeGuess);
   }
 ```
 
-This function also performs a callback. The information this function gives couldn't be used through a return because is is asynchronous. Instead the function that would use this information is passed to the async function as an argument and later called within the function body.
+#### API Notes
+
+This function also performs a callback. The information this function gives couldn't be used with a return because it is asynchronous, meaning it is executed on a different thread. Instead the function that would use this information is passed to the async function as an argument and later called within the function body.
 
 ### Focus
 
-Focus() is used to highlight and bring attention to the letter boxes.
+Focus() is used to highlight and bring attention to the letter boxes as the user enters their input.
 
 ```
 function updateFocus() {
@@ -66,7 +66,9 @@ function updateFocus() {
 
 > document.getElementById(`letter-${index}`).focus({ focusVisible: true });
 
-All the letter boxes are created using the div tag. By default divs cannot be focused. To remedy this tabindex="-1" was added to each one.
+#### Focus Notes
+
+All the letter boxes are created using the div tag. By default, a div cannot be focused. To remedy this tabindex="-1" was added to each one.
 
 ```
   <div class="letterBox" id="letter-0" tabindex="-1"></div>
