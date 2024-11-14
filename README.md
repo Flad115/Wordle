@@ -50,7 +50,7 @@ validate(letters, makeGuess);
 
 #### API Notes
 
-This function also performs a callback. The information this function gives couldn't be used with a return because it is asynchronous, meaning it is executed on a different thread. Instead the function that would use this information is passed to the async function as an argument and later called within the function body.
+This function also performs a callback. The information (var valid) this function gives couldn't be used with a return because it is asynchronous, meaning it is executed at a different time that it may appear in the code. Valid cannot be defined until the POST is completed JS has already moved on the the next task. To fix this problem, the function that would use this information is passed to the async function as an argument and later called within the function body.
 
 ### Focus
 
