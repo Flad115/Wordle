@@ -2,9 +2,9 @@
 
 (Click text above to play)
 
-## This learning project is a recreation of the game wordle developed Josh Wardle.
+## This learning project is a recreation of the game wordle developed by Josh Wardle.
 
-You have 6 guesses to figure out a random 5 letter word (ENGLISH ONLY). Input answers by typing and submit a guess by pressing enter (WILL NOT WORK ON MOBILE). There is no case sensitivity
+You have 6 guesses to figure out a random 5 letter word (ENGLISH ONLY). Input answers by typing and submit a guess by pressing enter (WILL NOT WORK ON MOBILE). There is no case sensitivity.
 
 > The letterboxes will become colored when a guess is submitted:
 
