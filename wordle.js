@@ -1,4 +1,3 @@
-"use strict";
 // Reference DOM elements and load event listeners after the page is loaded.
 // You are implicitly doing that but that is just a side effect of the placement
 // of the script at the bottom of the web page.  but you should explicit.
