@@ -1,22 +1,34 @@
+// Reference DOM elements and load event listeners after the page is loaded.
+// You are implicitly doing that but that is just a side effect of the placement
+// of the script at the bottom of the web page.  but you should explicit.
+// See window.addEventListener("load", [some function])
+
 var answer; //the word of the day
 var puzzle = ""; //this is for the word of the day api, each word as an attached puzzle number
 var guesses = 0;
 
 //these constants are for the html elements that will be enabled/disabled throughout runtime
 const invalidBox = document.querySelector(".invalid");
+const endScreen = document.getElementById("endScreen");
+const beginText = document.querySelector(".beginText");
 const resetBtn = document.querySelector(".reset");
+const okayBtn = document.createElement("button");
+//reset and okay button event listeners
 resetBtn.addEventListener("click", () => {
   resetBtn.classList.add("hidden");
   if (resetBtn.textContent === "New Game") {
-    getWord("?random=1");
+    getWord("?random=1"); //obtain a new word after a victory
   }
   resetGame();
 });
-const okayBtn = document.createElement("button");
 okayBtn.classList.add("okay");
 okayBtn.textContent = "Okay";
-okayBtn.addEventListener("click", okay);
-const endScreen = document.getElementById("endScreen");
+//this function will re-enable user input by calling createListener()
+//then it will add the hidden class back to the invalid box, removing it
+okayBtn.addEventListener("click", () => {
+  createListener();
+  invalidBox.classList.add("hidden");
+});
 
 //letters represents the users valid input.
 //backspace will also effect this
@@ -28,6 +40,16 @@ var letters = "";
 //it will be properly stored into letters
 var index = 0;
 
+//The focus on the first letter box must be initialized.
+//Afterwards it will be updated in the addKey, back and guess functions.
+function updateFocus() {
+  console.log(letters.length);
+  if (letters.length < 5) {
+    document.getElementById(`letter-${index}`).focus({ focusVisible: true });
+  }
+}
+updateFocus();
+
 //retrieve the word of the day from the api
 getWord(puzzle);
 
@@ -37,6 +59,8 @@ getWord(puzzle);
 //any keypress that is not a valid letter, backspace, or enter should be ignored
 function handleInput(event) {
   if (isLetter(event.key) && letters.length < 5) {
+    if (!beginText.classList.contains("hidden"))
+      beginText.classList.add("hidden");
     addKey(event.key);
   } else if (event.key === "Backspace") {
     back();
@@ -47,6 +71,7 @@ function handleInput(event) {
       invalid("Must enter 5 letters!");
     }
   }
+  updateFocus();
 }
 
 //the listener must be created in a function so it can be enabled and disabled when the alert box is enabled/disabled
@@ -75,6 +100,7 @@ function resetGame() {
   } else {
     endScreen.classList.remove("victory");
   }
+  updateFocus();
 }
 
 //this function checked the given parameter if it's a letter a-z
@@ -116,9 +142,9 @@ function makeGuess() {
   } else if (guesses >= 6) {
     gameEnd(false);
   } else {
-    //TO DO: SHOW EFFECTS FOR INCORRECT GUESS AND CORRECT LETTERS
     letters = "";
   }
+  updateFocus();
 }
 
 //this function checks if the letter at index i is in the word and in the right position
@@ -190,11 +216,4 @@ function invalid(message) {
   invalidBox.classList.remove("hidden");
   invalidBox.textContent = message;
   invalidBox.appendChild(okayBtn);
-}
-
-//function okay will renable user input by calling createListener()
-//then it will add the hidden class back to the invalid box, removing it
-function okay() {
-  createListener();
-  invalidBox.classList.add("hidden");
 }
